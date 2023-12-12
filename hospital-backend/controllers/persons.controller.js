@@ -1,4 +1,5 @@
 import { getConnection  } from "../database/connections";
+import sql from 'mssql';
 
 export const getPersons = async (req, res) => {
     const pool = await getConnection()
@@ -25,4 +26,13 @@ export const changeName = async (req, res) => {
     .query(`UPDATE Persona SET nombre = '${name}' WHERE idPersona = ${id}`);
 
     res.sendStatus(204);
+}
+
+export const getPerson = async (req, res) => {
+    const pool = await getConnection()
+    const result = await pool.request()
+    .input('id', sql.Int, req.params.id)
+    .execute('getPerson');
+
+    res.json(result.recordset);
 }

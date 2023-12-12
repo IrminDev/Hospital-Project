@@ -9,7 +9,6 @@ export const signUp = async (req, res) => {
     const { name, fatherLastName, motherLastName, user, curp, mail, password, height, weight, bloodType } = req.body;
     const salt = bcrypt.genSaltSync(10);
     const hashedPassword = bcrypt.hashSync(password, salt);
-    console.log(name, fatherLastName, motherLastName, user, curp, mail, password, height, weight, bloodType);
     
     await pool.request()
     .input('name', name)
