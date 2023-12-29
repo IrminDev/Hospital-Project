@@ -1,6 +1,7 @@
 import React from 'react'
 
-const ComboBox = ({options, handleChange, name, children, placeholder, required}) => {
+const ComboBox = ({options, handleChange, name, children, placeholder, required, enabled}) => {
+  enabled = enabled ? enabled : true
   return (
     <div className=" rounded-lg w-[100%] px-[0.4rem] bg-zinc-300 grid grid-cols-10 items-center py-2 mb-5">
         {children}
@@ -8,6 +9,7 @@ const ComboBox = ({options, handleChange, name, children, placeholder, required}
         onChange={handleChange}
         name={name}
         required={required}
+        enabled={enabled}
         defaultValue='default'>
             <option disabled id='default' value="default">{placeholder}</option>
             {options.map((option) => {

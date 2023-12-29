@@ -6,7 +6,10 @@ This is a scholar project for the Data Bases subject. For this project is used N
 
 ## Authors
 
-- [@IrminDev](https://www.github.com/IrminDev)
+- [Hernández Jiménez Irmin](https://www.github.com/IrminDev)
+- Garcia Garcia Aram Jesua
+- Horteales Morales Antony Rafel
+- Toral Hernandez Leonardo Javier
 
 # Environment variables
 To run this project you need the following environment variables in a .env file located in ./hospital-backend
@@ -69,4 +72,34 @@ Start the server
 | :-------- | :------- | :-------------------------------- |
 | `id`      | `string` | **Required**. Id of the person to fetch |
 
+```http
+  PUT /api/persons/:id
+```
 
+| Parameter | Type     | Description                       |
+| :-------- | :------- | :-------------------------------- |
+| `id`      | `string` | **Required**. Id of the person to update |
+
+```http
+  DELETE /api/persons/${id}
+```
+
+| Parameter | Type     | Description                       |
+| :-------- | :------- | :-------------------------------- |
+| `id`      | `string` | **Required**. Id of the person to delete |
+
+```http
+  POST /api/signUp
+```
+
+| Parameter | Type     | Description                       |
+| :-------- | :------- | :-------------------------------- |
+| `patient`      | `Object` | **Required**. Patient to upload on the DB |
+
+```http
+  POST /api/login
+```
+
+| Parameter | Type     | Description                       |
+| :-------- | :------- | :-------------------------------- |
+| `user`      | `Object` | **Required**. User credentials |

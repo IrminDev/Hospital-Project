@@ -13,7 +13,8 @@ export const deletePersons = async (req, res) => {
     const {id} = req.params;
     const pool = await getConnection()
     const result = await pool.request()
-    .query(`DELETE FROM Persona WHERE idPersona = ${id}`);
+    .input('id', sql.Int, id)
+    .execute("deletePerson");
 
     res.sendStatus(204);
 }
