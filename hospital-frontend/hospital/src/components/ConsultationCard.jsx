@@ -1,5 +1,4 @@
 import React from 'react'
-import { Link } from 'react-router-dom'
 
 const ConsultationCard = ({ consultation }) => {
   return (
@@ -7,14 +6,17 @@ const ConsultationCard = ({ consultation }) => {
       <div className=' flex flex-row items-center justify-between'>
         <div className=' flex flex-col items-start justify-center'>
           <p className=' text-xl font-bold text-slate-700'>{consultation.doctor}</p>
-          <p className=' text-md font-normal text-slate-700'>{consultation.date}</p>
-          <p className=' text-md font-normal text-slate-700'>{consultation.type}</p>
+          <p className=' text-md font-normal text-slate-700'>Fecha: {consultation.date}</p>
+          <p className=' text-md font-normal text-slate-700'>Servicios: {consultation.services}</p>
         </div>
         <div className=' flex flex-col items-end justify-center'>
           <p className=' text-xl font-bold text-slate-700'>{consultation.id}</p>
-          <p className=' text-md font-normal text-slate-700'>{consultation.time}</p>
-          <p className=' text-md font-normal text-slate-700'>{consultation.status}</p>
+          <p className=' text-md font-normal text-slate-700'>Hora: {consultation.time}</p>
+          <p className=' text-md font-normal text-slate-700'>Costo: {consultation.cost}</p>
         </div>
+      </div>
+      <div>
+        <p className='text-md font-normal text-slate-700'>{consultation.note}</p>
       </div>
     </div>
   )

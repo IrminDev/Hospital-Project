@@ -1,47 +1,24 @@
 import { getConnection  } from "../database/connections";
 import sql from 'mssql';
 
-export const getAppointmentsByUser = async (req, res) => {
+export const getConsultationsByUser = async (req, res) => {
     const pool = await getConnection()
     const result = await pool.request()
-    .input('idUser', sql.Int, req.params.idUser)
-    .execute('listAppointmentsByUser');
+    .input('idUser', req.params.idUser)
+    .execute('listConsultationsByUser')
 
     res.json(result.recordset);
 }
 
-export const getAppointmentById = async (req, res) => {
+export const getConsultationById = async (req, res) => {
     const pool = await getConnection()
     const result = await pool.request()
-    .query("SELECT * FROM informacion_cita WHERE idCita = " + req.params.id);
+    .query("SELECT * FROM Consultas WHERE idCita = " + req.params.id);
 
     res.json(result.recordset);
 }
 
-export const editAppointment = async (req, res) => {
-    
-}
-
-export const getAppointmentTypes = async (req, res) => {
-    const pool = await getConnection()
-    const result = await pool.request()
-    .query("SELECT * FROM TipoCita")
-
-    res.json(result.recordset);
-}
-
-export const getAppointmentsBySchedule = async (req, res) => {
-    const pool = await getConnection()
-    const result = await pool.request()
-    .input('idDoctor', req.params.idDoctor)
-    .input('idPatient', req.params.idDoctor)
-    .input('date', req.params.day) 
-    .execute('listAppointmentByIdAndSchedule')
-    
-    res.json(result.recordset);
-}
-
-export const createAppointment = async (req, res) => {
+export const createConsultation = async (req, res) => {
     const { idPaciente, idDoctor, idTipoCita, fecha, hora } = req.body;
     const pool = await getConnection()
     const result = await pool.request()

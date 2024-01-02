@@ -16,9 +16,19 @@ const getAppointmentTypes = async (id) => {
     return response.data;
 }
 
-const getAppointmentsBySchedule = async (id, day) => {
-    const response = await axios.get(`${baseUrl}s/${id}/${day}`)
+const getAppointmentsBySchedule = async (idPatient, idDoctor, day) => {
+    const response = await axios.get(`${baseUrl}s/${idPatient}/${idDoctor}/${day}`)
     return response.data;
 }
 
-export default { getAppointmentById, getAppointmentsForUser, getAppointmentTypes, getAppointmentsBySchedule }
+const createAppointment = async (appointment) => {
+    const response = await axios.post(baseUrl, appointment);
+    return response.data;
+}
+
+export default { getAppointmentById,
+    getAppointmentsForUser,
+    getAppointmentTypes,
+    getAppointmentsBySchedule,
+    createAppointment
+}

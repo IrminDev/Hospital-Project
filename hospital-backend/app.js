@@ -10,6 +10,7 @@ import patientsRouter from './routers/patients.routes'
 import appointmentsRouter from './routers/appointments.routes'
 import appointmentTypes from './routers/appointmentTypes.routes'
 import doctorsRouter from './routers/doctors.routes'
+import consultationRouter from './routers/consultations.routes'
 
 const app = express();
 app.use(cors())
@@ -24,5 +25,7 @@ app.use(patientsRouter);
 app.use(appointmentsRouter);
 app.use(appointmentTypes);
 app.use(doctorsRouter);
+app.use(doctorsRouter);
+app.use(consultationRouter)
 
 export default app
