@@ -25,6 +25,7 @@ const AppointmentForm = () => {
         date: true,
         time: true
     });
+    const [checked, setChecked] = useState(false);
 
     const navigate = useNavigate();
     
@@ -40,7 +41,6 @@ const AppointmentForm = () => {
             }
         })
 
-
         appointmentService.getAppointmentTypes().then((resp) => {
             resp.map((element) => {
                 setTypes((type) => [...type, {
@@ -52,16 +52,17 @@ const AppointmentForm = () => {
     }, []);
 
     useEffect(() => {
-        if(form.date && form.doctor && schedules.length === 8){
-            appointmentService.getAppointmentsBySchedule(JSON.parse(localStorage.getItem('user').id), form.doctor, form.date).then((resp) => {
+        if(form.date && !checked && form.doctor && schedules.length === 8){
+            appointmentService.getAppointmentsBySchedule(JSON.parse(localStorage.getItem('user')).id, form.doctor, form.date).then((resp) => {
                 const updatedSchedule = schedules.slice();
                 for (let i = 0; i < resp.length; i++) {
-                    const indexToRemove = updatedSchedule.findIndex(item => item.id === resp[i].hora);
+                    const indexToRemove = updatedSchedule.findIndex(item => item.id === moment(resp[i].hora).utc().format("HH:mm:ss"));
                     if (indexToRemove !== -1) {
                         updatedSchedule.splice(indexToRemove, 1);
                     }
                 }
 
+                setChecked(true)
                 setSchedules(updatedSchedule);
             });
         }
@@ -121,12 +122,13 @@ const AppointmentForm = () => {
 
             for (let i = 0; i < 8; i++) {
                 newSchedules.push({
-                    id: moment(resp[0].horaInicio).add(i, "h").format("HH:mm:ss"),
-                    value: moment(resp[0].horaInicio).add(i, "h").format("HH:mm:ss")
+                    id: moment(resp[0].horaInicio).utc().add(i, "h").format("HH:mm:ss"),
+                    value: moment(resp[0].horaInicio).utc().add(i, "h").format("HH:mm:ss")
                 })
             }
 
             setSchedules(data => [...data, ...newSchedules]);
+            setChecked(false)
         })
     }
 

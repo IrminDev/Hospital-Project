@@ -1,6 +1,6 @@
 import React from 'react'
 
-const ComboBox = ({options, handleChange, name, children, placeholder, required, disabled}) => {
+const ComboBox = ({options, handleChange, name, children, placeholder, required, disabled, value}) => {
   disabled = disabled ? disabled : false
   return (
     <div className=" rounded-lg w-[100%] px-[0.4rem] bg-zinc-300 grid grid-cols-10 items-center py-2 mb-5">
@@ -10,11 +10,13 @@ const ComboBox = ({options, handleChange, name, children, placeholder, required,
         name={name}
         required={required}
         disabled={disabled}
+        value={value}
         defaultValue='default'>
             <option disabled id='default' value="default">{placeholder}</option>
-            {options.map((option) => {
+            {options?.map((option) => {
+                const disabledOpt = option.disabled ? option.disabled : false
                 return (
-                <option className='text-neutral-800' key={option.id} value={option.id}>{option.value}</option>
+                <option disabled={disabledOpt} className='text-neutral-800' key={option.id} value={option.id}>{option.value}</option>
                 )
             })}
         </select>

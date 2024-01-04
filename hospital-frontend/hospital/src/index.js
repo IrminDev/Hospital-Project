@@ -7,8 +7,13 @@ import Login from './views/Login';
 import SignUp from './views/Signup';
 import Home from './views/Home';
 import AppointmentForm from './patient/AppointmentForm'
-import Consultations from './patient/Consultations';
+import ConsultationsPatient from './patient/Consultations';
+import ConsultationsDoctor from './doctor/Consultations';
+import ConsultationForm from './doctor/ConsultationForm';
 import ProfilePatient from './patient/Profile';
+import ProfileDoctor from './doctor/Profile';
+import PrescriptionForm from './doctor/PrescriptionForm';
+import Prescription from './doctor/Prescription';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
@@ -19,8 +24,13 @@ root.render(
         <Route path="/sign-up" element={<SignUp/>} />
         <Route path="/home" element={<Home />} />
         <Route path="/patient/create-appointment" element={<AppointmentForm />} />
-        <Route path="/patient/consultations" element={<Consultations />} />
+        <Route path="/patient/consultations" element={<ConsultationsPatient />} />
         <Route path="/patient/profile" element={<ProfilePatient />} />
+        <Route path="/doctor/consultations" element={<ConsultationsDoctor />} />
+        <Route path="/doctor/profile" element={<ProfileDoctor />} />
+        <Route path="/doctor/consultation-form" element={<ConsultationForm />} />
+        <Route path="/doctor/prescription-form/:id" element={<PrescriptionForm />} />
+        <Route path="/doctor/prescription/:id" element={<Prescription />} />
       </Routes>
     </Router>
 );

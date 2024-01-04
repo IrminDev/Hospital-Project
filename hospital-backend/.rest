@@ -1,0 +1,16 @@
+###
+POST http://localhost:3003/api/doctors HTTP/1.1
+content-Type: application/json
+
+{
+    "user": "IrminDoctor",
+    "curp": "HEJI040829HMCRMRA7",
+    "mail": "irminDoctor@gmail.com",
+    "name": "Irmin",
+    "fatherLastName": "Hernandez",
+    "motherLastName": "Jimenez",
+    "password": "Pochoclo.1",
+    "idSchedule": "1",
+    "idConsulting": "1",
+    "professionalID": "123456"
+}

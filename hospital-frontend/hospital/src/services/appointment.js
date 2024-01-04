@@ -26,9 +26,16 @@ const createAppointment = async (appointment) => {
     return response.data;
 }
 
+const getCompletedAppointments = async (idDoctor) => {
+    const response = await axios.get(`${baseUrl}s/completed/${idDoctor}`);
+
+    return response.data;
+}
+
 export default { getAppointmentById,
     getAppointmentsForUser,
     getAppointmentTypes,
     getAppointmentsBySchedule,
-    createAppointment
+    createAppointment,
+    getCompletedAppointments
 }

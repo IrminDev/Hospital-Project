@@ -36,7 +36,7 @@ export const getAppointmentsBySchedule = async (req, res) => {
     .input('idDoctor', req.params.idDoctor)
     .input('idPatient', req.params.idDoctor)
     .input('date', req.params.day) 
-    .execute('listAppointmentByIdAndSchedule')
+    .execute('listAppointmentsByIdAndSchedule')
     
     res.json(result.recordset);
 }
@@ -44,7 +44,7 @@ export const getAppointmentsBySchedule = async (req, res) => {
 export const createAppointment = async (req, res) => {
     const { idPaciente, idDoctor, idTipoCita, fecha, hora } = req.body;
     const pool = await getConnection()
-    const result = await pool.request()
+    await pool.request()
     .input('idPatient', sql.Int, idPaciente)
     .input('idDoctor', sql.Int, idDoctor)
     .input('idEspeciality', sql.Int, idTipoCita)
@@ -58,17 +58,19 @@ export const createAppointment = async (req, res) => {
                     errors: err
                 });
             }
-            if (!result.recordset[0]) {
-                return res.status(400).json({
-                    ok: false,
-                    message: 'There was an error saving your data',
-                    errors: err
-                });
-            }
+
             res.status(200).json({
                 ok: true,
                 appointment: result.recordset[0]
             });
         }
     );
+}
+
+export const getCompletedAppointments = async (req, res) => {
+    const pool = await getConnection()
+    const result = await pool.request()
+    .query('SELECT * FROM informacion_cita WHERE idDoctor = ' + req.params.id + ' AND fecha < GETDATE() AND hora < CAST(GETDATE() AS TIME)')
+
+    res.json(result.recordset);
 }

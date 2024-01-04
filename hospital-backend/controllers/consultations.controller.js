@@ -19,33 +19,34 @@ export const getConsultationById = async (req, res) => {
 }
 
 export const createConsultation = async (req, res) => {
-    const { idPaciente, idDoctor, idTipoCita, fecha, hora } = req.body;
+    const { appointment, services, cost, note } = req.body;
     const pool = await getConnection()
-    const result = await pool.request()
-    .input('idPatient', sql.Int, idPaciente)
-    .input('idDoctor', sql.Int, idDoctor)
-    .input('idEspeciality', sql.Int, idTipoCita)
-    .input('datetime', sql.VarChar, `${fecha} ${hora}`)
-    .execute('createAppointment', (err, result) => {
-            if (err) {
-                console.log(err);
-                return res.status(500).json({
-                    ok: false,
-                    message: 'Error on db',
-                    errors: err
-                });
-            }
-            if (!result.recordset[0]) {
-                return res.status(400).json({
-                    ok: false,
-                    message: 'There was an error saving your data',
-                    errors: err
-                });
-            }
-            res.status(200).json({
-                ok: true,
-                appointment: result.recordset[0]
-            });
+    try{
+        await pool.request()
+        .input('id', sql.Int, appointment)
+        .input('cost', sql.Int, cost)
+        .input('note', sql.NVarChar, note)
+        .execute('createConsultation')
+        
+        if (services.length > 0) {
+            await Promise.all(services.map(async (service) => {
+                await pool.request()
+                    .input('id', sql.Int, appointment)
+                    .input('service', sql.Int, service)
+                    .execute('addServiceToConsultation');
+            }));
         }
-    );
+    
+        res.status(200).json({
+            ok: true,
+            message: 'Consulta creada con éxito',
+        });
+    } catch(error) {
+        res.status(500).json({
+            ok: false,
+            message: 'Error on db',
+            errors: error
+        });
+    }
+
 }

@@ -28,6 +28,7 @@ const Home = () => {
         if (!session) {
             navigate('/login')
         }
+
         personService.getPersonById(session.id).then((resp) => {
             setUser({
                 name: resp[0].nombre,
@@ -39,25 +40,39 @@ const Home = () => {
                 type: resp[0].idTipoUsuario
             })
         })
-    }, []);
 
-    const handleLogout =  () => {
-        localStorage.removeItem('user')
-        navigate('/login')
-    }
+
+    }, []);
 
     return (
         <div>
             {user.type === 1 ? 
-            <DoctorHome /> :
-            user.type === 2 ?
             <PatientHome /> :
+            user.type === 2 ?
+            <DoctorHome /> :
             <ReceptionistHome />}
         </div>
     )
 }
 
 const DoctorHome = () => {
+    const [appointments, setAppointments] = useState([]);
+    useEffect(() => {
+        const session = JSON.parse(localStorage.getItem('user'));
+        appointmentService.getAppointmentsForUser(session.id).then((resp) => {
+            resp.map((element) => {
+                setAppointments((appointment) => [...appointment, {
+                    name: element.nombrePaciente + ' ' + element.apPaternoPaciente + ' ' + element.apMaternoPaciente,
+                    date: moment(element.fecha, "YYYY-MM-DD").format('YYYY-MM-DD'),
+                    time: moment(element.hora, "YYYY-MM-DDTHH:mm:ss.SSSZ").utc().format('HH:mm:ss'),
+                    type: element.tipoCita,
+                    status: element.estadoCita,
+                    id: element.idCita
+                }])
+            })
+        })
+    }, [])
+
     return (
         <div>
             <Header>
@@ -67,15 +82,18 @@ const DoctorHome = () => {
                 <HeaderLink text={'Perfil'} url={'/doctor/profile'} />
             </Header>
 
-            <div className=' min-h-screen pt-32 flex flex-col items-center justify-evenly'>
-                <div className=' rounded-lg bg-blue-300 w-[80%] flex flex-row items-center justify-evenly'>
+            <div className=' min-h-screen pt-32 flex flex-col items-center justify-start'>
+                <div className=' rounded-lg py-4 bg-blue-300 w-[80%] flex flex-row items-center justify-evenly'>
                     <div className=' w-[50%] flex flex-row justify-between'>
-                        <CountCard count={10} text={'Citas'} />
-                        <CountCard count={10} text={'Consultas'} />
+                        <CountCard count={appointments.filter(app => app.status === 'Pendiente').length} text={'Citas pendientes'} />
+                        <CountCard count={appointments.filter(app => app.status === 'Completada').length} text={'Citas completadas'} />
+                        <CountCard count={appointments.filter(app => app.status === 'Cancelada').length} text={'Citas canceladas'} />
                     </div>
-                    <div className=' w-[50%] flex items-center justify-between'>
-                        <ButtonLink url={'/create-appointment'} text={'Agenda una cita'} />
-                    </div>
+                </div>
+                <div className=' w-[85%] mt-5'>
+                    {appointments.map((appointment) => {
+                        return <AppointmentCard key={appointment.id} appointment={appointment} />
+                    })}
                 </div>
             </div>
         </div>
@@ -91,14 +109,14 @@ const PatientHome = () => {
             resp.map((element) => {
                 setAppointments((appointment) => [...appointment, {
                     name: 'Dr ' + element.nombreDoctor + ' ' + element.apPaternoDoctor + ' ' + element.apMaternoDoctor,
-                    date: moment(element.fecha, "hh:mm:ss"),
-                    time: moment(element.hora, "YYYY-MM-DD"),
+                    date: moment(element.fecha, "YYYY-MM-DD").format('YYYY-MM-DD'),
+                    time: moment(element.hora, "YYYY-MM-DDTHH:mm:ss.SSSZ").utc().format('HH:mm:ss'),
                     type: element.tipoCita,
-                    state: element.estadoCita,
+                    status: element.estadoCita,
                     id: element.idCita
                 }])
             })
-    console.log(resp)
+        console.log(resp)
         })
     }, [])
 
@@ -114,8 +132,8 @@ const PatientHome = () => {
             <div className=' w-full mt-32 flex flex-col items-center justify-start'>
                 <div className=' rounded-lg bg-blue-300 w-[80%] flex flex-row items-center justify-evenly p-5'>
                     <div className=' w-[50%] flex flex-row justify-evenly'>
-                        <CountCard count={appointments.filter(app => app.type === 'Pendiente').length} text={'Citas pendientes'} />
-                        <CountCard count={appointments.filter(app => app.type === 'Completada').length} text={'Citas finalizadas'} />
+                        <CountCard count={appointments.filter(app => app.status === 'Pendiente').length} text={'Citas pendientes'} />
+                        <CountCard count={appointments.filter(app => app.status === 'Completada').length} text={'Citas finalizadas'} />
                     </div>
                     <div className=' w-[50%] flex items-center justify-end'>
                         <ButtonLink url={'../patient/create-appointment'} text={'Agenda una cita'} />
@@ -123,7 +141,7 @@ const PatientHome = () => {
                 </div>
                 <div className=' w-[85%] mt-5'>
                     {appointments.map((appointment) => {
-                        return <AppointmentCard appointment={appointment} />
+                        return <AppointmentCard key={appointment.id} appointment={appointment} />
                     })}
                 </div>
             </div>

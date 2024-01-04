@@ -1,5 +1,5 @@
 import React from 'react'
-import { Link } from 'react-router-dom'	
+import moment from 'moment'
 
 const AppointmentCard = ({ appointment }) => {
   return (
@@ -15,10 +15,6 @@ const AppointmentCard = ({ appointment }) => {
           <p className=' text-md font-normal text-slate-700'>{appointment.time}</p>
           <p className=' text-md font-normal text-slate-700'>{appointment.status}</p>
         </div>
-      </div>
-      <div className=' flex flex-row items-center justify-evenly mt-4'>
-        <Link to={'./'} className=' w-1/3 p-2 rounded-md bg-violet-600 text-slate-200 font-bold'>Cancelar</Link>
-        <Link to={'./'} className=' w-1/3 p-2 rounded-md bg-violet-600 text-slate-200 font-bold'>Editar</Link>
       </div>
     </div>
   )

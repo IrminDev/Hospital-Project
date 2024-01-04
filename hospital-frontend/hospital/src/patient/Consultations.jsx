@@ -28,11 +28,11 @@ const Consultations = () => {
       resp.map((el) => (
         setConsultations((consultations) => [...consultations, {
           id: el.idConsulta,
-          doctor: 'Dr. ' + el.nombreDoctor,
+          name: 'Dr. ' + el.nombreDoctor,
           date: moment(el.fechaHora).format('DD/MM/YYYY'),
           time: moment(el.fechaHora).format('HH:mm'),
           note: el.notaMedica,
-          costo: el.costo,
+          cost: el.costoTotal,
           services: el.servicios,
         }])
       ))
@@ -55,7 +55,7 @@ const Consultations = () => {
             </div>
             <div className=' w-[85%] mt-5'>
                 {consultations.map((consultation) => {
-                    return <ConsultationCard consultation={consultation} />
+                    return <ConsultationCard key={consultation.id} consultation={consultation} />
                 })}
             </div>
         </div>
