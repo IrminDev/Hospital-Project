@@ -14,3 +14,18 @@ content-Type: application/json
     "idConsulting": "1",
     "professionalID": "123456"
 }
+
+###
+POST http://localhost:3003/api/receptionist HTTP/1.1
+content-Type: application/json
+
+{
+    "user": "IrminReceptionist",
+    "curp": "HEJI040829HMCRMRA7",
+    "mail": "IrminReceptionist@gmail.com",
+    "name": "Irmin",
+    "fatherLastName": "Hernandez",
+    "motherLastName": "Jimenez",
+    "password": "Pochoclo.1",
+    "idConsulting": "1"
+}

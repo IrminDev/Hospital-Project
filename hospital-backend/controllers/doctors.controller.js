@@ -79,3 +79,44 @@ export const createDoctor = async (req, res) => {
         });
     })
 }
+
+export const getDoctors = async (req, res) => {
+    const pool = await getConnection()
+    const result = await pool.request()
+    .query("SELECT * FROM Datos_Doctor WHERE habilitado = 1")
+    const doctors = result.recordset;
+    const groupedDoctors = doctors.reduce((acc, doctor) => {
+        const key = `${doctor.idPersona}-${doctor.cedula}-${doctor.idConsultorio}`;
+        if (!acc[key]) {
+            if(doctor.especialidad){
+                acc[key] = { ...doctor, especialidad: [doctor.especialidad] };
+            } else {
+                acc[key] = { ...doctor, especialidad: [] };
+            }
+        } else {
+            if(doctor.especialidad){
+                acc[key].especialidad.push(doctor.especialidad);
+            }
+        }
+        return acc;
+    }, {});
+    const groupedDoctorsArray = Object.values(groupedDoctors);
+
+    res.json(groupedDoctorsArray);
+}
+
+export const deleteDoctor = async (req, res) => {
+    const pool = await getConnection()
+    const result = await pool.request()
+    .input('id', req.params.id)
+    .execute('deleteDoctor');
+
+    console.log('====================================');
+    console.log(result.recordset);
+    console.log('====================================');
+    if(!result.recordset){
+        res.status(204).json({
+            ok: true
+        });
+    }
+}

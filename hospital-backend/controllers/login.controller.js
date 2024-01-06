@@ -18,6 +18,7 @@ export const postLogin = async (req, res) => {
                 errors: err
             });
         }
+
         if (!result.recordset[0]) {
             return res.status(400).json({
                 ok: false,
@@ -25,6 +26,7 @@ export const postLogin = async (req, res) => {
                 errors: err
             });
         }
+        
         if (!bcrypt.compareSync(body.password, result.recordset[0].contrasena)) {
             return res.status(400).json({
                 ok: false,

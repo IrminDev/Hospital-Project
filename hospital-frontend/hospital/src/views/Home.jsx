@@ -151,26 +151,51 @@ const PatientHome = () => {
 }
 
 const ReceptionistHome = () => {
+    const [appointments, setAppointments] = useState([]);
+    useEffect(() => {
+        const session = JSON.parse(localStorage.getItem('user'));
+        appointmentService.getAppointmentsForUser(session.id).then((resp) => {
+            resp.map((element) => {
+                setAppointments((appointment) => [...appointment, {
+                    name: element.nombrePaciente + ' ' + element.apPaternoPaciente + ' ' + element.apMaternoPaciente,
+                    date: moment(element.fecha, "YYYY-MM-DD").format('YYYY-MM-DD'),
+                    time: moment(element.hora, "YYYY-MM-DDTHH:mm:ss.SSSZ").utc().format('HH:mm:ss'),
+                    type: element.tipoCita,
+                    status: element.estadoCita,
+                    id: element.idCita
+                }])
+            })
+        })
+    }, [])
+
     return (
         <div>
             <Header>
-                <HeaderLink text={'Citas'} url={'/home'} />
-                <HeaderLink text={'Compras'} url={'/receptionist/purchases'} />
-                <HeaderLink text={'Inventario'} url={'/receptionist/inventory'} />
-                <HeaderLink text={'Doctores'} url={'/receptionist/doctors'} />
-                <HeaderLink text={'Pacientes'} url={'/receptionist/pacients'} />
+                <HeaderLink text={'Citas'} url={'../home'} />
+                <HeaderLink text={'Compras'} url={'../receptionist/purchases'} />
+                <HeaderLink text={'Inventario'} url={'../receptionist/inventory'} />
+                <HeaderLink text={'Doctores'} url={'../receptionist/doctors'} />
+                <HeaderLink text={'Pacientes'} url={'../receptionist/patients'} />
+                <HeaderLink text={'Pacientes'} url={'../receptionist/profile'} />
             </Header>
 
-            <div className=' rounded-lg bg-blue-300 w-[80%] flex flex-row items-center justify-evenly'>
-                <div className=' w-[50%] flex flex-row justify-between'>
-                    <CountCard count={10} text={'Citas'} />
-                    <CountCard count={10} text={'Consultas'} />
+            <div className=' flex flex-col items-center justify-start w-full py-8'>
+                <div className=' rounded-lg bg-blue-300 mt-28 w-[80%] flex flex-row items-center justify-start px-5 py-3'>
+                    <div className=' w-[50%] flex flex-row justify-evenly'>
+                        <CountCard count={appointments.filter(app => app.status === 'Pendiente').length} text={'Citas pendientes'} />
+                        <CountCard count={appointments.filter(app => app.status === 'Completada').length} text={'Citas completadas'} />
+                        <CountCard count={appointments.filter(app => app.status === 'Cancelada').length} text={'Citas canceladas'} />
+                    </div>
+                    <div className=' w-[40%] flex items-center justify-between'>
+                        <ButtonLink url={'/create-appointment'} text={'Agenda una cita'} />
+                    </div>
                 </div>
-                <div className=' w-[50%] flex items-center justify-between'>
-                    <ButtonLink url={'/create-appointment'} text={'Agenda una cita'} />
+                <div className=' w-[85%] mt-5'>
+                    {appointments.map((appointment) => {
+                        return <AppointmentCard key={appointment.id} appointment={appointment} />
+                    })}
                 </div>
             </div>
-
 
         </div>
     )

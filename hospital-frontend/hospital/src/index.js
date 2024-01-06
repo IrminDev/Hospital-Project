@@ -14,6 +14,8 @@ import ProfilePatient from './patient/Profile';
 import ProfileDoctor from './doctor/Profile';
 import PrescriptionForm from './doctor/PrescriptionForm';
 import Prescription from './doctor/Prescription';
+import Patients from './receptionist/Patients';
+import Doctors from './receptionist/Doctors';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
@@ -31,6 +33,8 @@ root.render(
         <Route path="/doctor/consultation-form" element={<ConsultationForm />} />
         <Route path="/doctor/prescription-form/:id" element={<PrescriptionForm />} />
         <Route path="/doctor/prescription/:id" element={<Prescription />} />
+        <Route path="/receptionist/patients/" element={<Patients />} />
+        <Route path="/receptionist/doctors/" element={<Doctors />} />
       </Routes>
     </Router>
 );
