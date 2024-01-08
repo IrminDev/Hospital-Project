@@ -3,6 +3,7 @@ const baseUrl = 'http://localhost:3003/api/consultation';
 
 const getConsultationById = async (id) => {
     const response = await axios.get(`${baseUrl}/${id}`);
+    
     return response.data;
 }
 

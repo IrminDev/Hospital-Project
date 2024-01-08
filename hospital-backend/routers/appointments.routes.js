@@ -1,5 +1,7 @@
 import { Router } from "express";
-import { getAppointmentsByUser, getAppointmentById, getAppointmentTypes, getAppointmentsBySchedule, createAppointment, getCompletedAppointments } from '../controllers/appointments.controller'
+import { getAppointmentsByUser, getAppointmentById, getAppointmentTypes,
+    getAppointmentsBySchedule, createAppointment, getCompletedAppointments,
+    cancelAppointment, updateAppointment } from '../controllers/appointments.controller'
 
 const router = Router()
 
@@ -9,7 +11,8 @@ router.get('/api/appointment/:id', (req, res) => getAppointmentById(req, res));
 router.post('/api/appointment/', (req, res) => createAppointment(req, res));
 router.get('/api/appointments/', (req, res) => getAppointmentTypes(req, res));
 router.post('/api/appointments/', (req, res) => getAppointmentTypes(req, res));
-router.put('/api/appointments/:id', (req, res) => getAppointmentsByUser(req, res));
-router.get('/api/appointments/:idPatient/:idDoctor/:day', (req, res) => getCompletedAppointments(req, res));
+router.put('/api/appointment/:id', (req, res) => updateAppointment(req, res));
+router.delete('/api/appointment/:id', (req, res) => cancelAppointment(req, res));
+router.get('/api/appointments/:idPatient/:idDoctor/:day', (req, res) => getAppointmentsBySchedule(req, res));
 
 export default router;

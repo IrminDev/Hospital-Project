@@ -32,10 +32,24 @@ const getCompletedAppointments = async (idDoctor) => {
     return response.data;
 }
 
+const updateAppointment = async (appointment) => {
+    const response = await axios.put(`${baseUrl}/${appointment.id}`, appointment);
+
+    return response.data;
+}
+
+const deleteAppointment = async (id) => {
+    const response = await axios.delete(`${baseUrl}/${id}`);
+
+    return response;
+}
+
 export default { getAppointmentById,
     getAppointmentsForUser,
     getAppointmentTypes,
     getAppointmentsBySchedule,
     createAppointment,
-    getCompletedAppointments
+    getCompletedAppointments,
+    updateAppointment,
+    deleteAppointment
 }

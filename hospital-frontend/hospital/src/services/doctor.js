@@ -22,4 +22,10 @@ const deleteDoctor = async (id) => {
     return response
 }
 
-export default { getDoctorsByAppointmentType, getDoctor,getDoctors, deleteDoctor }
+const createDoctor = async (doctor) => {
+    const response = await axios.post(baseUrl, doctor)
+
+    return response
+}
+
+export default { getDoctorsByAppointmentType, getDoctor,getDoctors, deleteDoctor, createDoctor }

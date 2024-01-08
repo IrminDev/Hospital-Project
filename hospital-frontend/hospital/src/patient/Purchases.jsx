@@ -6,7 +6,6 @@ import { useNavigate } from 'react-router-dom'
 import Header from '../components/Header'
 import HeaderLink from '../components/HeaderLink'
 import CountCard from '../components/CountCard'
-import ButtonLink from '../components/ButtonLink'
 import PurchaseCard from '../components/PurchaseCard'
 import moment from 'moment'
 
@@ -22,12 +21,12 @@ const Purchases = () => {
         }
 
         personService.getPersonById(session.id).then((resp) => {
-            if (resp[0].idTipoUsuario !== 3) {
+            if (resp[0].idTipoUsuario !== 1) {
                 navigate('../home')
             }
         })
 
-        purchaseService.getPurchases().then((resp) => {
+        purchaseService.getPurchaseByUser(session.id).then((resp) => {
             resp.map(purchase => {
                 setPurchases(purchases => [...purchases, {
                     id: purchase.idCompra,
@@ -52,20 +51,15 @@ const Purchases = () => {
         <div>
             <Header>
                 <HeaderLink text={'Citas'} url={'../home'} />
-                <HeaderLink text={'Compras'} url={'../receptionist/purchases'} />
-                <HeaderLink text={'Inventario'} url={'../receptionist/inventory'} />
-                <HeaderLink text={'Doctores'} url={'../receptionist/doctors'} />
-                <HeaderLink text={'Pacientes'} url={'../receptionist/patients'} />
-                <HeaderLink text={'Perfil'} url={'../receptionist/profile'} />
+                <HeaderLink text={'Consultas'} url={'../patient/consultations'} />
+                <HeaderLink text={'Compras'} url={'../patient/purchases'} />
+                <HeaderLink text={'Perfil'} url={'../patient/profile'} />
             </Header>
 
             <div className=' flex flex-col items-center justify-center w-full py-8 mb-10'>
                 <div className=' rounded-lg bg-blue-300 mt-28 w-[80%] flex flex-row items-center justify-start px-5 py-3'>
-                    <div className=' w-[30%] flex flex-row justify-evenly'>
+                    <div className=' w-[100%] flex flex-row justify-evenly'>
                         <CountCard count={purchases.length} text={'Compras'} />
-                    </div>
-                    <div className=' w-[60%] flex items-center justify-between'>
-                        <ButtonLink url={'../receptionist/register-purchase'} text={'Registrar compra'} />
                     </div>
                 </div>
 

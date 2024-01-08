@@ -1,6 +1,6 @@
 import React from 'react'
 
-const Input = ({children, type, placeholder, name, required, handleChange, disabled, min, max, value}) => {
+const Input = ({children, type, placeholder, name, required, handleChange, disabled, min, max, value, maxlength}) => {
   disabled = disabled ? disabled : false
   return (
     <div className=" rounded-lg w-[100%] px-[0.4rem] bg-zinc-300 grid grid-cols-10 items-center py-2 mb-5">
@@ -13,6 +13,7 @@ const Input = ({children, type, placeholder, name, required, handleChange, disab
         disabled={disabled}
         value={value}
         min={min}
+        maxLength={maxlength}
         max={max}
         name={name} />
     </div>

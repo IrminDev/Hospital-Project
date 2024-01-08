@@ -18,7 +18,7 @@ const ConsultationCard = ({ consultation, children }) => {
       <div>
         <p className='text-md font-normal text-slate-700'>{consultation.note}</p>
       </div>
-      <div className=' flex flex-row items-center justify-evenly mt-5'>
+      <div className=' flex flex-row items-center justify-evenly mt-5 '>
         {children}
       </div>
     </div>

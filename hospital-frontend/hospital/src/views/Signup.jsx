@@ -35,6 +35,7 @@ const SignUpForm = () => {
         user: '',
         password: '',
     });
+    
     const [bloodType, setBloodType] = useState([]);
 
     useEffect(() => {

@@ -15,6 +15,11 @@ import servicesRouter from './routers/services.routes'
 import medicineRouter from './routers/medicines.routes'
 import prescriptionRouter from './routers/prescription.routes'
 import receptionistRouter from './routers/receptionst.routes'
+import purchaseRouter from './routers/purchase.routes'
+import specialityRouter from './routers/specialities.routes'
+import schedulesRouter from './routers/schedules.routes'
+import consultingsRouter from './routers/consultings.routes'
+import paymentsRouter from './routers/payments.routes'
 
 const app = express();
 app.use(cors())
@@ -35,6 +40,10 @@ app.use(servicesRouter)
 app.use(medicineRouter)
 app.use(prescriptionRouter)
 app.use(receptionistRouter)
-
+app.use(purchaseRouter)
+app.use(specialityRouter)
+app.use(schedulesRouter)
+app.use(consultingsRouter)
+app.use(paymentsRouter)
 
 export default app

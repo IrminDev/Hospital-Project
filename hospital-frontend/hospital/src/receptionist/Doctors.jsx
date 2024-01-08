@@ -66,7 +66,7 @@ const Doctors = () => {
                 <HeaderLink text={'Inventario'} url={'../receptionist/inventory'} />
                 <HeaderLink text={'Doctores'} url={'../receptionist/doctors'} />
                 <HeaderLink text={'Pacientes'} url={'../receptionist/patients'} />
-                <HeaderLink text={'Pacientes'} url={'../receptionist/profile'} />
+                <HeaderLink text={'Perfil'} url={'../receptionist/profile'} />
             </Header>
 
             <div className=' flex flex-col items-center justify-start w-full py-8'>
@@ -75,7 +75,7 @@ const Doctors = () => {
                         <CountCard count={doctors.length} text={'Doctores'} />
                     </div>
                     <div className=' w-[40%] flex items-center justify-between'>
-                        <ButtonLink url={'../receptionist/register-patient'} text={'Agenda una cita'} />
+                        <ButtonLink url={'../receptionist/register-doctor'} text={'Registrar un doctor'} />
                     </div>
                 </div>
                 <div className=' w-[85%] mt-5'>

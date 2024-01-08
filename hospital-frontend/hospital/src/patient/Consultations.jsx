@@ -7,6 +7,7 @@ import HeaderLink from '../components/HeaderLink';
 import CountCard from '../components/CountCard';
 import { useNavigate } from 'react-router-dom'
 import personService from '../services/person';
+import ButtonLink from '../components/ButtonLink';
 
 const Consultations = () => {
   const [consultations, setConsultations] = useState([]);
@@ -42,8 +43,8 @@ const Consultations = () => {
   return (
     <div>
         <Header>
-            <HeaderLink text={'Citas'} url={'/../home'} />
-            <HeaderLink text={'Consultas'} url={'/consultations'} />
+            <HeaderLink text={'Citas'} url={'../home'} />
+            <HeaderLink text={'Consultas'} url={'../patient/consultations'} />
             <HeaderLink text={'Compras'} url={'../patient/purchases'} />
             <HeaderLink text={'Perfil'} url={'../patient/profile'} />
         </Header>
@@ -55,7 +56,9 @@ const Consultations = () => {
             </div>
             <div className=' w-[85%] mt-5'>
                 {consultations.map((consultation) => {
-                    return <ConsultationCard key={consultation.id} consultation={consultation} />
+                    return <ConsultationCard key={consultation.id} consultation={consultation}>
+                      <ButtonLink text={'Ver ticket'} url={`../patient/consultation/${consultation.id}`} />
+                    </ConsultationCard>
                 })}
             </div>
         </div>

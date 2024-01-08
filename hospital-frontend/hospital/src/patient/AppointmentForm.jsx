@@ -29,6 +29,7 @@ const AppointmentForm = () => {
 
     const navigate = useNavigate();
     
+    
     useEffect(() => {
         const session = JSON.parse(localStorage.getItem('user'));
         if(!session){
@@ -49,6 +50,8 @@ const AppointmentForm = () => {
                 }])
             })
         })
+
+        
     }, []);
 
     useEffect(() => {
@@ -153,7 +156,7 @@ const AppointmentForm = () => {
 
         appointmentService.createAppointment(newAppointment).then((resp) => {
             if(resp.ok){
-                navigate('../../home')
+                navigate('../patient/appointment/' + resp.idTipoCita)
             }
         })
     }
@@ -161,10 +164,10 @@ const AppointmentForm = () => {
     return (
         <div>
             <Header>
-                <HeaderLink text={'Citas'} url={'../../home'} />
-                <HeaderLink text={'Consultas'} url={'../consultations'} />
-                <HeaderLink text={'Compras'} url={'../purchases'} />
-                <HeaderLink text={'Perfil'} url={'../profile'} />
+                <HeaderLink text={'Citas'} url={'../home'} />
+                <HeaderLink text={'Consultas'} url={'../patient/consultations'} />
+                <HeaderLink text={'Compras'} url={'../patient/purchases'} />
+                <HeaderLink text={'Perfil'} url={'../patient/profile'} />
             </Header>
             <div className=' h-[100vh] max-sm:h-[145vh] bg-slate-100'>
                 <div className=' bg-blue-50 w-[90%] px-8 py-12 translate-x-[-50%] translate-y-[-50%] absolute left-1/2 top-1/2 mt-24 mb-24 max-md:mt-52 rounded-2xl border-2 border-blue-400'>

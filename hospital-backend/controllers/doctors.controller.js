@@ -1,6 +1,7 @@
 import { getConnection  } from "../database/connections";
 import bcrypt from 'bcryptjs'
 import jwt from 'jsonwebtoken'
+import sql from 'mssql'
 
 export const getDoctorsByAppointmentType = async (req, res) => {
     const pool = await getConnection()
@@ -35,8 +36,7 @@ export const getDoctor = async (req, res) => {
 }
 
 export const createDoctor = async (req, res) => {
-    const { user, curp, mail, password, name, fatherLastName, motherLastName, idSchedule, idConsulting, professionalID} = req.body
-    console.log(req.body)
+    const { user, curp, mail, password, name, fatherLastName, motherLastName, schedule, consulting, professionalId, specialities} = req.body
     const pool = await getConnection()
     const salt = bcrypt.genSaltSync(10);
     const hashedPassword = bcrypt.hashSync(password, salt);
@@ -48,10 +48,10 @@ export const createDoctor = async (req, res) => {
     .input('name', name)
     .input('fatherLastName', fatherLastName)
     .input('motherLastName', motherLastName)
-    .input('idSchedule', idSchedule)
-    .input('idConsulting', idConsulting)
-    .input('professionalID', professionalID)
-    .execute('createDoctor', (err, result) => {
+    .input('idSchedule', schedule)
+    .input('idConsulting', consulting)
+    .input('professionalID', professionalId)
+    .execute('createDoctor', async (err, result) => {
         if (err) {
             console.log(err);
             return res.status(500).json({
@@ -67,10 +67,19 @@ export const createDoctor = async (req, res) => {
                 errors: err
             });
         }
-
+        
+        if(specialities.length > 0){
+            await Promise.all(specialities.map(async (speciality) => {
+                await pool.request()
+                .input('idDoctor', sql.Int, result.recordset[0].idPersona)
+                .input('speciality', sql.Int, speciality.id)
+                .execute('addSpeciality');
+            }))
+        }
+        
         result.recordset[0].contrasena = 'No this time my friend';
         const token = jwt.sign(result.recordset[0], process.env.JWT_SEED, { expiresIn: 14400 });
-
+       
         res.status(200).json({
             ok: true,
             token: token,
@@ -111,9 +120,6 @@ export const deleteDoctor = async (req, res) => {
     .input('id', req.params.id)
     .execute('deleteDoctor');
 
-    console.log('====================================');
-    console.log(result.recordset);
-    console.log('====================================');
     if(!result.recordset){
         res.status(204).json({
             ok: true

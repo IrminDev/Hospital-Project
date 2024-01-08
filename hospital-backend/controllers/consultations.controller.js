@@ -13,9 +13,29 @@ export const getConsultationsByUser = async (req, res) => {
 export const getConsultationById = async (req, res) => {
     const pool = await getConnection()
     const result = await pool.request()
-    .query("SELECT * FROM Consultas WHERE idCita = " + req.params.id);
+    .query("SELECT * FROM Informacion_Consultas WHERE idConsulta = " + req.params.id);
+    const consultation = {
+        idConsulta: result.recordset[0].idConsulta,
+        idDoctor: result.recordset[0].idDoctor,
+        idPaciente: result.recordset[0].idPaciente,
+        nombrePaciente: result.recordset[0].nombrePaciente,
+        nombreDoctor: result.recordset[0].nombreDoctor,
+        fecha: result.recordset[0].fecha,
+        hora: result.recordset[0].hora,
+        costo: result.recordset[0].costo,
+        notaMedica: result.recordset[0].notaMedica,
+        servicios: result.recordset
+        .map((record) => {
+            return {
+                servicio: record.servicio,
+                costo: record.precio
+            }
+        })
+        
+        .filter((servicio) => servicio !== null && servicio !== '')
+    }
 
-    res.json(result.recordset);
+    res.json([consultation]);
 }
 
 export const createConsultation = async (req, res) => {
