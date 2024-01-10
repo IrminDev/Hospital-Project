@@ -1,9 +1,18 @@
 import { getConnection  } from "../database/connections";
 
 export const getSchedules = async (req, res) => {
-    const pool = await getConnection()
-    const result = await pool.request()
-    .query("SELECT * FROM Horario");
+    try {
+        const pool = await getConnection()
+        const result = await pool.request()
+        .query("SELECT * FROM Horario");
 
-    res.json(result.recordset);
+        res.json(result.recordset);
+    } catch (error) {
+        console.log(error);
+        res.status(500).json({
+            ok: false,
+            message: 'Error on db',
+            errors: error
+        });
+    }
 }

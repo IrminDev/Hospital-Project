@@ -6,6 +6,18 @@ const getMedicines = async () => {
     return response.data;
 }
 
+const getMedicineById = async (id) => {
+    const response = await axios.get(`${baseUrl}/${id}`);
+    return response.data;
+}
+
+const updateMedicine = async (medicine, id) => {
+    const response = await axios.put(`${baseUrl}`, medicine);
+    return response;
+}
+
 export default {
-    getMedicines
+    getMedicines,
+    getMedicineById,
+    updateMedicine
 }

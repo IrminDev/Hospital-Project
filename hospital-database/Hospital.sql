@@ -188,3 +188,15 @@ CREATE TABLE Pedido(
 	CONSTRAINT FK_Pedido_Medicamento FOREIGN KEY (idMedicamento) REFERENCES Medicamento (idMedicamento) ON DELETE CASCADE ON UPDATE CASCADE,
 	CONSTRAINT FK_Pedido_Compra FOREIGN KEY (idCompra) REFERENCES Compra (idCompra) ON DELETE CASCADE ON UPDATE CASCADE
 )
+
+CREATE TABLE Bitacora_histmedico(
+	id INT IDENTITY NOT NULL, 
+	fecha DATETIME DEFAULT NULL,
+	usuario VARCHAR(100) NOT NULL,
+	idPaciente INT NOT NULL,
+	nombrePaciente VARCHAR(50) NOT NULL, 
+	diagnostico VARCHAR(100) NOT NULL,
+	consultorio INT NOT NULL,
+	costoTotal INT NOT NULL,
+	PRIMARY KEY (ID)
+);

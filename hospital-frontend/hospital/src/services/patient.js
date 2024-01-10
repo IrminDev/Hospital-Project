@@ -17,4 +17,9 @@ const deletePatient = async (id) => {
     return response;
 }
 
-export default { getPatientById, getPatients, deletePatient }
+const getMedicalHistory = async (id) => {
+    const response = await axios.get(`http://localhost:3003/api/medicalHistory/${id}`);
+    return response.data;
+}
+
+export default { getPatientById, getPatients, deletePatient, getMedicalHistory }

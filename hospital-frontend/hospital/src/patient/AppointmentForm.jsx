@@ -64,7 +64,6 @@ const AppointmentForm = () => {
                         updatedSchedule.splice(indexToRemove, 1);
                     }
                 }
-
                 setChecked(true)
                 setSchedules(updatedSchedule);
             });
@@ -141,7 +140,6 @@ const AppointmentForm = () => {
             ...form,
             [e.target.name]: e.target.value
         })
-
     }
 
     const handleSubmit = (e) => {
@@ -156,7 +154,7 @@ const AppointmentForm = () => {
 
         appointmentService.createAppointment(newAppointment).then((resp) => {
             if(resp.ok){
-                navigate('../patient/appointment/' + resp.idTipoCita)
+                navigate('../patient/appointment/' + resp.appointment)
             }
         })
     }

@@ -20,6 +20,7 @@ import specialityRouter from './routers/specialities.routes'
 import schedulesRouter from './routers/schedules.routes'
 import consultingsRouter from './routers/consultings.routes'
 import paymentsRouter from './routers/payments.routes'
+import medicalHistoryRouter from './routers/medicalHistory.routes'
 
 const app = express();
 app.use(cors())
@@ -45,5 +46,6 @@ app.use(specialityRouter)
 app.use(schedulesRouter)
 app.use(consultingsRouter)
 app.use(paymentsRouter)
+app.use(medicalHistoryRouter)
 
 export default app

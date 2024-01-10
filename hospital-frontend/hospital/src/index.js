@@ -17,6 +17,7 @@ import EditAppointmentForm from './receptionist/EditAppointmentForm';
 import ProfileDoctor from './doctor/Profile';
 import PrescriptionForm from './doctor/PrescriptionForm';
 import Prescription from './doctor/Prescription';
+import MedicalHistory from './doctor/MedicalHistory';
 import Patients from './receptionist/Patients';
 import AppointmentInfo from './patient/AppointmentInfo';
 import Doctors from './receptionist/Doctors';
@@ -25,6 +26,9 @@ import PurchasesPatient from './patient/Purchases';
 import DoctorForm from './receptionist/DoctorForm';
 import PatientForm from './receptionist/PatientForm';
 import PurchaseForm from './receptionist/PurchaseForm';
+import PatientsDoctor from './doctor/Patients';
+import Inventory from './receptionist/Inventory';
+import StockForm from './receptionist/StockForm';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
@@ -42,9 +46,11 @@ root.render(
         <Route path="/patient/purchases" element={<PurchasesPatient />} />
         <Route path="/doctor/consultations" element={<ConsultationsDoctor />} />
         <Route path="/doctor/profile" element={<ProfileDoctor />} />
+        <Route path="/doctor/patients" element={<PatientsDoctor />} />
         <Route path="/doctor/consultation-form" element={<ConsultationForm />} />
         <Route path="/doctor/prescription-form/:id" element={<PrescriptionForm />} />
         <Route path="/doctor/prescription/:id" element={<Prescription />} />
+        <Route path="/doctor/medical-history/:id" element={<MedicalHistory />} />
         <Route path="/receptionist/patients/" element={<Patients />} />
         <Route path="/receptionist/doctors/" element={<Doctors />} />
         <Route path="/receptionist/profile/" element={<ProfileReceptionist />} />
@@ -53,6 +59,8 @@ root.render(
         <Route path="/receptionist/register-purchase/" element={<PurchaseForm />} />
         <Route path="/receptionist/register-doctor/" element={<DoctorForm />} />
         <Route path="/receptionist/register-patient/" element={<PatientForm />} />
+        <Route path="/receptionist/inventory/" element={<Inventory />} />
+        <Route path="/receptionist/modify-medicine/:id" element={<StockForm />} />
       </Routes>
     </Router>
 );

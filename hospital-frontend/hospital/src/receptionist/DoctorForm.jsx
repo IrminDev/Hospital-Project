@@ -164,7 +164,7 @@ const DoctorForm = () => {
                         <FormInput value={form.user} name={'user'} handleChange={handleChange} required={true} placeholder={'Usuario'} />
 					</div>
                     <div className=' w-full grid grid-cols-form gap-y-5 gap-x-8 mb-5'>
-                        <FormInput value={form.password} name={'password'} handleChange={handleChange} required={true} placeholder={'Contraseña'} />
+                        <FormInput value={form.password} type={'password'} name={'password'} handleChange={handleChange} required={true} placeholder={'Contraseña'} />
                         <FormInput value={form.professionalId} name={'professionalId'} handleChange={handleChange} required={true} placeholder={'Cédula profesional'} maxlength={6} />
 					</div>
                     <div className=' w-full grid grid-cols-form gap-y-5 gap-x-8 mb-5'>

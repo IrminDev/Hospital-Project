@@ -30,7 +30,7 @@ const PatientForm = () => {
     useEffect(() => {
         const session = JSON.parse(localStorage.getItem('user'));
         if (!session) {
-            navigate('../login')
+            navigate('../../login')
         }
 
         personService.getPersonById(session.id).then((resp) => {
@@ -94,7 +94,7 @@ const PatientForm = () => {
                             <FormInput value={form.user} name={'user'} handleChange={handleChange} required={true} placeholder={'Usuario'} />
                         </div>
                         <div className=' w-full grid grid-cols-form gap-y-5 gap-x-8 mb-5'>
-                            <FormInput value={form.password} name={'password'} handleChange={handleChange} required={true} placeholder={'Contraseña'} />
+                            <FormInput value={form.password} type={'password'} name={'password'} handleChange={handleChange} required={true} placeholder={'Contraseña'} />
                             <FormInput name={'height'} type={'number'} handleChange={handleChange} required={true} placeholder={'Altura (cm)'} min={0} />
                         </div>
                         <div className=' w-full grid grid-cols-form gap-y-5 gap-x-8 mb-5'>

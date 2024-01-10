@@ -45,7 +45,7 @@ const Consultations = () => {
       <Header>
           <HeaderLink text={'Citas'} url={'../home'} />
           <HeaderLink text={'Consultas'} url={'../doctor/consultations'} />
-          <HeaderLink text={'Pacientes'} url={'../doctor/medical-history'} />
+          <HeaderLink text={'Pacientes'} url={'../doctor/patients'} />
           <HeaderLink text={'Perfil'} url={'../doctor/profile'} />
       </Header>
 
